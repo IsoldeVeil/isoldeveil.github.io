@@ -1,0 +1,745 @@
+/* =========================================================
+   萤火森林 · 首页视觉（对齐参考图：森林满幅 + 玻璃卡片压在图上）
+   ========================================================= */
+
+/* ---- 首页横幅：森林图铺满、加高，让首屏卡片压在图像上 ---- */
+#page-header.full_page {
+  height: 700px !important;
+  background-image: url("/images/index-background.jpeg") !important;
+  background-size: cover !important;
+  background-position: center 42% !important;
+  background-attachment: scroll !important;
+  background-color: #05100a !important;
+}
+
+/* 蒙版：顶部压暗托住导航；底部亮色收一层薄雾、暗色压深，图像边缘藏在卡片下面不留硬线 */
+#page-header.full_page:not(.not-top-img)::before {
+  background-image:
+    linear-gradient(180deg, rgba(3, 10, 7, 0.62) 0%, rgba(3, 10, 7, 0.16) 34%, rgba(3, 10, 7, 0) 62%),
+    radial-gradient(150% 100% at 50% 32%, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.10) 84%, rgba(0, 0, 0, 0.24) 100%) !important;
+}
+
+[data-theme='dark'] #page-header.full_page:not(.not-top-img)::before {
+  background-image:
+    linear-gradient(180deg, rgba(3, 10, 7, 0.62) 0%, rgba(3, 10, 7, 0.16) 34%, rgba(3, 10, 7, 0) 62%),
+    linear-gradient(180deg, rgba(13, 13, 13, 0) 0%, rgba(13, 13, 13, 0) 93%, rgba(13, 13, 13, 0.82) 98%, rgba(13, 13, 13, 1) 100%),
+    radial-gradient(150% 100% at 50% 32%, rgba(0, 0, 0, 0) 42%, rgba(0, 0, 0, 0.26) 74%, rgba(0, 0, 0, 0.58) 100%) !important;
+}
+
+/* 仅首页主体上移与横幅重叠 —— 文章页/归档页保持正常流，避免正文压住标题 */
+#page-header.full_page + main#content-inner {
+  margin-top: -152px !important;
+  position: relative;
+  z-index: 3;
+}
+
+/* ---- 首屏排版：左对齐的大号衬线标题 + 蝴蝶标识 ---- */
+#page-header.full_page #site-info {
+  top: 26%;
+  padding-left: max(9vw, 26px);
+  width: 100%;
+  text-align: left;
+}
+
+#page-header.full_page #site-title {
+  display: block;
+  overflow: visible;
+  -webkit-line-clamp: none;
+  text-align: left;
+  font-family: Georgia, "Times New Roman", "Noto Serif SC", "Songti SC", serif;
+  font-weight: 400;
+  font-size: clamp(46px, 5vw, 84px);
+  line-height: 1.1;
+  letter-spacing: 0.015em;
+  color: #f8f2e6;
+  text-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+}
+
+#page-header.full_page #site-title::before {
+  content: "";
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  margin-right: 0.14em;
+  vertical-align: -0.05em;
+  background: url("/images/butterfly-cream.png") center / 120% no-repeat;
+  filter: drop-shadow(0 0 18px rgba(255, 236, 186, 0.5));
+}
+
+#page-header.full_page #site-subtitle {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 24px;
+  font-size: clamp(13px, 0.98vw, 16px);
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.72);
+  text-align: left;
+}
+
+#page-header.full_page #site-subtitle::before {
+  content: "";
+  flex: 0 0 auto;
+  width: clamp(26px, 3vw, 46px);
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.55));
+}
+
+/* =========================================================
+   文章卡片：图左文右 + 玻璃面板
+   ========================================================= */
+#recent-posts .recent-post-item {
+  display: flex !important;
+  align-items: stretch !important;
+  overflow: hidden;
+  margin-bottom: 22px !important;
+  border-radius: 14px !important;
+  transition: transform .4s cubic-bezier(.2,.7,.3,1), background-color .4s ease, border-color .4s ease, box-shadow .4s ease;
+}
+
+#recent-posts .recent-post-item .post_cover {
+  order: 1;
+  flex: 0 0 42% !important;
+  width: 42% !important;
+  margin: 0 !important;
+  overflow: hidden;
+}
+
+#recent-posts .recent-post-item .post_cover.left,
+#recent-posts .recent-post-item .post_cover.right {
+  order: 1;
+  float: none !important;
+}
+
+#recent-posts .recent-post-item .post_cover a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+#recent-posts .recent-post-item .post_cover img.post-bg {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  border-radius: 0 !important;
+  transform: scale(1.01);
+  transition: transform .8s cubic-bezier(.2,.7,.3,1);
+}
+
+#recent-posts .recent-post-item:hover .post_cover img.post-bg {
+  transform: scale(1.05);
+}
+
+#recent-posts .recent-post-item .recent-post-info {
+  order: 2;
+  flex: 1 1 auto;
+  padding: 30px 34px 28px !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#recent-posts .recent-post-item .recent-post-info {
+  flex: 1 1 auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#recent-posts .recent-post-info .article-title {
+  font-size: 23px !important;
+  font-weight: 600 !important;
+  line-height: 1.42 !important;
+  letter-spacing: 0.012em;
+  margin-bottom: 12px;
+}
+
+#recent-posts .recent-post-info .article-meta-wrap {
+  font-size: 12.5px !important;
+  letter-spacing: 0.02em;
+  margin-bottom: 14px;
+}
+
+#recent-posts .article-meta__categories {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 11px;
+  border-radius: 999px;
+  font-size: 12px !important;
+  line-height: 1.6;
+  border: 1px solid transparent;
+}
+
+#recent-posts .recent-post-info .content {
+  font-size: 14px !important;
+  line-height: 1.95 !important;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 0 !important;
+}
+
+/* =========================================================
+   玻璃面板 · 暗色模式
+   ========================================================= */
+[data-theme='dark'] {
+  --card-bg: rgba(10, 19, 14, 0.62);
+  --card-box-shadow: 0 26px 60px -28px rgba(0, 0, 0, 0.7);
+  --card-hover-box-shadow: 0 34px 76px -30px rgba(0, 0, 0, 0.8);
+}
+
+[data-theme='dark'] .recent-post-item,
+[data-theme='dark'] .card-widget {
+  background-color: rgba(10, 19, 14, 0.62) !important;
+  background-image:
+    radial-gradient(140% 110% at 8% -20%, rgba(190, 220, 190, 0.10), rgba(190, 220, 190, 0) 58%) !important;
+  border: 1px solid rgba(214, 232, 214, 0.10) !important;
+  box-shadow: 0 26px 60px -28px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+  backdrop-filter: blur(16px) saturate(125%);
+  -webkit-backdrop-filter: blur(16px) saturate(125%);
+}
+
+[data-theme='dark'] .recent-post-item:hover,
+[data-theme='dark'] .card-widget:hover {
+  background-color: rgba(13, 24, 17, 0.72) !important;
+  border-color: rgba(220, 238, 220, 0.18) !important;
+  box-shadow: 0 34px 76px -30px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.09) !important;
+}
+
+[data-theme='dark'] #recent-posts .recent-post-item:hover {
+  transform: translateY(-3px);
+}
+
+[data-theme='dark'] #recent-posts .article-title,
+[data-theme='dark'] #recent-posts .recent-post-info .content {
+  color: #eef3ec !important;
+}
+
+[data-theme='dark'] #recent-posts .recent-post-info .content {
+  color: rgba(226, 234, 226, 0.66) !important;
+}
+
+[data-theme='dark'] #recent-posts .recent-post-info .article-meta-wrap {
+  color: rgba(226, 234, 226, 0.55) !important;
+}
+
+[data-theme='dark'] #recent-posts .article-meta__categories {
+  color: rgba(232, 240, 232, 0.9) !important;
+  border-color: rgba(214, 232, 214, 0.22);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* =========================================================
+   玻璃面板 · 亮色模式
+   ========================================================= */
+[data-theme='light'] {
+  --card-box-shadow: 0 24px 54px -30px rgba(18, 38, 28, 0.55);
+  --card-hover-box-shadow: 0 32px 68px -30px rgba(18, 38, 28, 0.65);
+}
+
+[data-theme='light'] .recent-post-item,
+[data-theme='light'] .card-widget {
+  background-color: rgba(255, 255, 255, 0.86) !important;
+  background-image:
+    radial-gradient(140% 110% at 8% -20%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0) 60%) !important;
+  border: 1px solid rgba(24, 44, 32, 0.10) !important;
+  box-shadow: 0 24px 54px -30px rgba(18, 38, 28, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(16px) saturate(112%);
+  -webkit-backdrop-filter: blur(16px) saturate(112%);
+}
+
+[data-theme='light'] .recent-post-item:hover,
+[data-theme='light'] .card-widget:hover {
+  background-color: rgba(255, 255, 255, 0.96) !important;
+  border-color: rgba(24, 44, 32, 0.16) !important;
+  box-shadow: 0 32px 68px -30px rgba(18, 38, 28, 0.65), inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+}
+
+[data-theme='light'] #recent-posts .recent-post-item:hover {
+  transform: translateY(-3px);
+}
+
+[data-theme='light'] #recent-posts .article-title {
+  color: #1c2a22 !important;
+}
+
+[data-theme='light'] #recent-posts .recent-post-info .content {
+  color: rgba(32, 48, 38, 0.72) !important;
+}
+
+[data-theme='light'] #recent-posts .recent-post-info .article-meta-wrap {
+  color: rgba(32, 48, 38, 0.55) !important;
+}
+
+[data-theme='light'] #recent-posts .article-meta__categories {
+  color: #2a3d31 !important;
+  border-color: rgba(24, 44, 32, 0.16);
+  background-color: rgba(24, 44, 32, 0.04);
+}
+
+/* =========================================================
+   侧栏卡片：紧凑的信息层级
+   ========================================================= */
+#aside-content .card-widget {
+  border-radius: 14px !important;
+  padding: 22px 20px !important;
+}
+
+#aside-content .card-info .avatar-img {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #16241b;
+  box-shadow:
+    inset 0 0 0 1px rgba(196, 226, 202, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.10),
+    0 0 26px rgba(150, 200, 170, 0.18);
+}
+
+#aside-content .card-info .avatar-img img {
+  display: block !important;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+#aside-content .card-info .author-info__name {
+  font-size: 17px !important;
+  letter-spacing: 0.02em;
+  margin-top: 10px;
+}
+
+#aside-content .card-info .author-info__description {
+  font-size: 12.5px !important;
+  line-height: 1.7;
+  opacity: 0.62;
+  margin: 6px auto 0;
+}
+
+#aside-content .card-info .card-info-data {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(120, 140, 120, 0.14);
+}
+
+#aside-content .card-info-data .card-info-data-item {
+  padding: 0 6px;
+}
+
+#aside-content .card-info-data .card-info-data-item:not(:first-child) {
+  border-left: 1px solid rgba(120, 140, 120, 0.14);
+}
+
+#aside-content .card-info-data .headline {
+  font-size: 12px !important;
+  opacity: 0.6;
+}
+
+#aside-content .card-info-data .length-num {
+  font-size: 19px !important;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  margin-top: 2px;
+}
+
+#aside-content .item-headline {
+  font-size: 14.5px !important;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  margin-bottom: 12px;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+[data-theme='dark'] #aside-content .card-info,
+[data-theme='dark'] #aside-content .card-announcement,
+[data-theme='dark'] #aside-content .card-recent-post,
+[data-theme='dark'] #aside-content .card-categories {
+  color: rgba(228, 236, 228, 0.86);
+}
+
+[data-theme='dark'] #aside-content .card-widget a:hover {
+  color: #cfe6d4 !important;
+}
+
+/* =========================================================
+   文章正文：玻璃面板，去掉黑色投影
+   ========================================================= */
+#post {
+  border-radius: 14px !important;
+  overflow: hidden;
+  transition: background-color .4s ease, border-color .4s ease;
+}
+
+[data-theme='dark'] #post {
+  background-color: rgba(26, 40, 31, 0.70) !important;
+  background-image:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0) 26%),
+    radial-gradient(120% 80% at 12% -6%, rgba(186, 218, 190, 0.12), rgba(186, 218, 190, 0) 58%) !important;
+  border: 1px solid rgba(214, 232, 214, 0.12) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10) !important;
+  backdrop-filter: blur(20px) saturate(130%);
+  -webkit-backdrop-filter: blur(20px) saturate(130%);
+}
+
+[data-theme='light'] #post {
+  background-color: rgba(255, 255, 255, 0.86) !important;
+  background-image:
+    radial-gradient(150% 110% at 10% -12%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0) 60%) !important;
+  border: 1px solid rgba(24, 44, 32, 0.10) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(18px) saturate(112%);
+  -webkit-backdrop-filter: blur(18px) saturate(112%);
+}
+
+/* 正文内部的次级卡片（引用块、代码块等）不要重复叠投影 */
+#article-container blockquote,
+#article-container .highlight {
+  box-shadow: none !important;
+}
+
+[data-theme='dark'] #footer {
+  background-color: rgba(5, 12, 8, 0.62) !important;
+  border-top: 1px solid rgba(150, 200, 168, 0.12);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* =========================================================
+   液态玻璃 · 全站统一面板（首页卡片 / 正文 / 侧栏 / 归档 / 关于）
+   只在面板自身做边光与反光，不用任何黑色投影
+   ========================================================= */
+[data-theme='dark'],
+[data-theme='light'] {
+  --card-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  --card-hover-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}
+
+/* 浅色模式：不用纯白底，换成低饱和暖灰绿，和玻璃面板拉开层次 */
+[data-theme='light'] {
+  --global-bg: #e8ebe3;
+  --light-grey: #e8ebe3;
+}
+
+/* 其余零散组件的黑色投影一并去掉 */
+.article-sort-item,
+.article-sort-item-img,
+.tag-cloud a,
+#pagination .page-number,
+.post-copyright,
+.relatedPosts > .relatedPosts-list > div,
+#nav .menus_items,
+.menus_item_child {
+  box-shadow: none !important;
+}
+
+.card-widget,
+#post,
+#archive,
+#category,
+#tag,
+#page,
+#recent-posts .recent-post-item {
+  border-radius: 18px !important;
+  border: 1px solid rgba(255, 255, 255, 0.20) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.34),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.10),
+    inset 1px 0 0 rgba(255, 255, 255, 0.10),
+    inset -1px 0 0 rgba(255, 255, 255, 0.10) !important;
+  background-image:
+    radial-gradient(ellipse 900px 120px at 50% -30px, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0.08) 45%, rgba(255, 255, 255, 0) 100%),
+    linear-gradient(118deg, rgba(255, 255, 255, 0.14) 0px, rgba(255, 255, 255, 0) 180px),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.06) 0px, rgba(255, 255, 255, 0) 70px) !important;
+  backdrop-filter: blur(26px) saturate(180%) brightness(1.05);
+  -webkit-backdrop-filter: blur(26px) saturate(180%) brightness(1.05);
+  transition: background-color .4s ease, border-color .4s ease, box-shadow .4s ease;
+}
+
+[data-theme='dark'] .card-widget,
+[data-theme='dark'] #post,
+[data-theme='dark'] #archive,
+[data-theme='dark'] #category,
+[data-theme='dark'] #tag,
+[data-theme='dark'] #page,
+[data-theme='dark'] #recent-posts .recent-post-item {
+  background-color: rgba(30, 45, 36, 0.50) !important;
+  border-color: rgba(255, 255, 255, 0.16) !important;
+}
+
+[data-theme='light'] .card-widget,
+[data-theme='light'] #post,
+[data-theme='light'] #archive,
+[data-theme='light'] #category,
+[data-theme='light'] #tag,
+[data-theme='light'] #page,
+[data-theme='light'] #recent-posts .recent-post-item {
+  background-color: rgba(252, 253, 249, 0.74) !important;
+  border-color: rgba(255, 255, 255, 0.95) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.55),
+    0 0 0 1px rgba(34, 54, 41, 0.16) !important;
+}
+
+/* 交互：靠边光和底色变化反馈，不用投影 */
+[data-theme='dark'] #recent-posts .recent-post-item:hover {
+  background-color: rgba(38, 56, 45, 0.62) !important;
+  border-color: rgba(255, 255, 255, 0.26) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.12) !important;
+  transform: translateY(-2px);
+}
+
+[data-theme='dark'] .card-widget:hover {
+  background-color: rgba(38, 56, 45, 0.60) !important;
+  border-color: rgba(255, 255, 255, 0.24) !important;
+}
+
+[data-theme='light'] #recent-posts .recent-post-item:hover {
+  background-color: rgba(255, 255, 252, 0.88) !important;
+  border-color: rgba(255, 255, 255, 1) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    0 0 0 1px rgba(34, 54, 41, 0.22) !important;
+  transform: translateY(-2px);
+}
+
+[data-theme='light'] .card-widget:hover {
+  background-color: rgba(255, 255, 252, 0.88) !important;
+  border-color: rgba(255, 255, 255, 1) !important;
+}
+
+/* 页面头图统一：由主题 top_img / category_per_img 提供，这里只做一层压暗保证标题可读 */
+#page-header:not(.full_page)::before {
+  background: linear-gradient(180deg, rgba(3, 10, 7, 0.55) 0%, rgba(3, 10, 7, 0.30) 45%, rgba(3, 10, 7, 0.55) 100%) !important;
+}
+
+/* 头图底部向页面底色收口，避免生硬的横切 */
+#page-header:not(.full_page) {
+  box-shadow: inset 0 -72px 64px -44px var(--global-bg) !important;
+}
+
+/* 右下角工具按钮：同款玻璃小胶囊 */
+#rightside > div > button,
+#rightside > a {
+  background-color: rgba(30, 45, 36, 0.55) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-radius: 10px !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  color: #eaf2ea !important;
+}
+
+[data-theme='light'] #rightside > div > button,
+[data-theme='light'] #rightside > a {
+  background-color: rgba(255, 255, 255, 0.62) !important;
+  border-color: rgba(255, 255, 255, 0.9) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+  color: #25352b !important;
+}
+
+/* 头像框：内侧一圈微光 + 一圈冷白描边，去掉黑色投影 */
+#aside-content .card-info .avatar-img {
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.22),
+    0 0 0 1px rgba(255, 255, 255, 0.10),
+    0 0 24px rgba(150, 205, 170, 0.18) !important;
+}
+
+/* ---------- 目录（TOC）：去掉实色高亮块，改玻璃胶囊 ---------- */
+#card-toc .toc-content ol {
+  padding-left: 2px !important;
+}
+
+#card-toc .toc-link {
+  padding: 5px 12px !important;
+  border-radius: 999px !important;
+  line-height: 1.5;
+}
+
+[data-theme='dark'] #card-toc .toc-link.active {
+  background: rgba(127, 184, 148, 0.20) !important;
+  color: #a8d9bd !important;
+  box-shadow: inset 0 0 0 1px rgba(168, 217, 189, 0.28) !important;
+}
+
+[data-theme='light'] #card-toc .toc-link.active {
+  background: rgba(79, 140, 107, 0.16) !important;
+  color: #2c5a42 !important;
+  box-shadow: inset 0 0 0 1px rgba(79, 140, 107, 0.28) !important;
+}
+
+[data-theme='dark'] #card-toc .toc-link:hover {
+  color: #a8d9bd !important;
+}
+
+[data-theme='light'] #card-toc .toc-link:hover {
+  color: #2c5a42 !important;
+}
+
+/* 目录标题里的进度数字，弱化一下 */
+.toc-percentage {
+  font-weight: 400 !important;
+  opacity: 0.55;
+}
+
+/* =========================================================
+   移动端适配（≤768px）
+   ========================================================= */
+@media screen and (max-width: 768px) {
+  /* 首页横幅：不再用 700px 桌面高度，改用视口比例，标题压在可视区中下部 */
+  #page-header.full_page {
+    height: 82vh !important;
+    min-height: 460px !important;
+    max-height: 620px !important;
+    background-position: center 46% !important;
+  }
+
+  #page-header.full_page #site-info {
+    top: 44% !important;
+    padding-left: 22px !important;
+    padding-right: 22px !important;
+  }
+
+  #page-header.full_page #site-title {
+    font-size: clamp(30px, 9.5vw, 44px) !important;
+    line-height: 1.14 !important;
+    letter-spacing: 0.01em !important;
+    text-shadow: 0 6px 26px rgba(0, 0, 0, 0.55);
+  }
+
+  #page-header.full_page #site-title::before {
+    width: 0.8em;
+    height: 0.8em;
+    margin-right: 0.1em;
+  }
+
+  #page-header.full_page #site-subtitle {
+    margin-top: 14px !important;
+    font-size: 12px !important;
+    gap: 10px !important;
+    letter-spacing: 0.06em !important;
+  }
+
+  #page-header.full_page #site-subtitle::before {
+    width: 22px !important;
+  }
+
+  /* 重叠量减半，避免在手机窄屏上把卡片顶到屏幕外 */
+  #page-header.full_page + main#content-inner {
+    margin-top: -64px !important;
+  }
+
+  /* 文章卡片：改成上图下文，不要让图被压成一小条 */
+  #recent-posts .recent-post-item {
+    flex-direction: column !important;
+    border-radius: 16px !important;
+    margin-bottom: 16px !important;
+  }
+
+  #recent-posts .recent-post-item .post_cover {
+    order: 1 !important;
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 16 / 9;
+  }
+
+  #recent-posts .recent-post-item .post_cover a,
+  #recent-posts .recent-post-item .post_cover img.post-bg {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  #recent-posts .recent-post-item .recent-post-info {
+    order: 2 !important;
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    padding: 18px 18px 20px !important;
+  }
+
+  #recent-posts .recent-post-info .article-title {
+    font-size: 18px !important;
+    line-height: 1.45 !important;
+    margin-bottom: 10px !important;
+  }
+
+  #recent-posts .recent-post-info .content {
+    font-size: 13px !important;
+    line-height: 1.85 !important;
+    -webkit-line-clamp: 2;
+  }
+
+  /* 侧栏整体下沉，间距收紧 */
+  #aside-content {
+    margin-top: 18px !important;
+  }
+
+  #aside-content .card-widget {
+    margin-bottom: 14px !important;
+  }
+
+  /* 非首页头图：手机上也别太高，标题居中即可 */
+  #page-header:not(.full_page) {
+    height: 240px !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  #page-header:not(.full_page) #site-title {
+    font-size: 24px !important;
+  }
+
+  /* 正文卡片内边距收一档，避免文字贴边 */
+  #post,
+  #page,
+  #archive,
+  #category,
+  #tag {
+    padding: 20px 18px !important;
+    border-radius: 16px !important;
+  }
+
+  /* 移动端目录抽屉与浮动按钮 */
+  #mobile-toc-button {
+    border-radius: 10px !important;
+  }
+
+  /* 窄屏兜底：即使 JS 还没切到 hide-menu，也收起顶部菜单、只留汉堡 */
+  #nav .menus_items {
+    display: none !important;
+  }
+
+  #nav #toggle-menu {
+    display: inline-block !important;
+  }
+
+  /* 手机抽屉菜单也用玻璃 */
+  #sidebar-menus {
+    background: rgba(12, 20, 15, 0.86) !important;
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+  }
+
+  #sidebar-menus .menus_items {
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
+  }
+
+  #rightside > div > button,
+  #rightside > a {
+    width: 38px !important;
+    height: 38px !important;
+  }
+}
+

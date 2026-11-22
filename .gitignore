@@ -1,0 +1,22 @@
+
+# Dependencies
+node_modules/
+
+# Hexo generated files
+public/
+.deploy_git/
+db.json
+
+# Cache and temporary files
+*.log
+.cache/
+.tmp/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE settings
+.idea/
+.vscode/
