@@ -591,6 +591,17 @@
   opacity: 0.55;
 }
 
+/* 正文配图：圆角 + 一圈边光，和整站玻璃统一 */
+#article-container img:not(.emoji):not(.no-lightbox) {
+  border-radius: 12px !important;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: none !important;
+}
+
+[data-theme='light'] #article-container img:not(.emoji):not(.no-lightbox) {
+  border-color: rgba(34, 54, 41, 0.14);
+}
+
 /* =========================================================
    移动端适配（≤768px）
    ========================================================= */
